@@ -1,46 +1,8 @@
 html
   head
     script(src='https://unpkg.com/htmx.org@1.9.2')
+    link(rel='stylesheet' href='globals.css')
     style(type='text/css').
-      :root {
-        --color1: #331D2C;
-        --color2: #3F2E3E;
-        --color3: #A78295;
-        --color4: #EFE1D1;
-      }
-
-      body {
-        background-color:var(--color1);
-      }
-
-      * {
-        font-family: 'Courier New', monospace;
-      }
-
-      .main-container {
-        width: 50%;
-        margin: 10px auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .title{
-        color:var(--color4);
-      }
-
-      #htmx-logo {
-        color: white;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
-        font-size: 40pt;
-      }
-
-      #htmx-logo-span {
-        color: #3d72d7;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
-      }
-
       .options {
         list-style: none;
         text-align: center;
@@ -58,11 +20,9 @@ html
         color: var(--color4);
       }
 
-
   body
     div(class='main-container')
-      div 
-        //- img(src="./public/htmx_logo.png")
+      div(class='htmx-logo-container') 
         h1(id='htmx-logo') 
           | &lt;
           span(id='htmx-logo-span') /
@@ -72,7 +32,8 @@ html
       ul(class="options")
         li
           a(href="/counter") Counter
-        li TODO List
+        li 
+          a(href="/todo") TODO List
         li Text editor
         li 
           a(href="/animals") Animals

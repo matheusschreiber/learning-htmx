@@ -1,0 +1,9 @@
+div(id='todo-tasks-container')
+  h3 Total tasks #{tasks.length} Completed: #{tasks.filter(task=>task[1]==1).length}
+  
+  ul(id="todo-tasks")
+    each task, index in tasks
+      li(id=task[1]==1?'line':'normal')
+        input(type='checkbox' checked=task[1]==1?true:false hx-post=`/todo/update-task/${index}` hx-target='#todo-tasks-container' hx-swap='outerHTML')
+        p(hx-post=`/todo/update-task/${index}` hx-target='#todo-tasks-container' hx-swap='outerHTML') #{task[0]}
+        span(class="delete-button" hx-post=`/todo/delete-task/${index}` hx-target='#todo-tasks-container' hx-swap='outerHTML') delete

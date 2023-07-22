@@ -1,0 +1,74 @@
+html
+  head
+    script(src='https://unpkg.com/htmx.org@1.9.2')
+    link(rel='stylesheet' href='globals.css')
+    style(type='text/css').
+      .todo-tasks  {
+        list-style: none;
+        padding: 0;
+      }
+
+      h3 {
+        color: var(--color3);
+      }
+
+      .todo-tasks li{
+        color: var(--color4);
+        font-size: 12pt;
+        margin-bottom: 10px;
+      }
+
+      #line { text-decoration: line-through; }
+
+      #line, #normal {
+        display: flex;
+        align-items: center;
+        color: var(--color4);
+        cursor: pointer;
+      }
+
+      #line input, #normal input {
+        margin: 10px;
+        height: 20px;
+        width: 20px;
+      }
+
+      .new-task-container {
+        display: flex; 
+      }
+
+      .delete-button {
+        text-decoration: underline;
+        color: var(--color3);
+        margin-left: 10px;
+      }
+
+  body
+    div(class='main-container')
+      div(class='htmx-logo-container') 
+        h1(id='htmx-logo') 
+          | &lt;
+          span(id='htmx-logo-span') /
+          | &gt; htm
+          span(id='htmx-logo-span') x
+      
+      h2(class="title") 
+        a(href="/") 🔙 
+        | TODO List
+
+      div(id='todo-tasks-container')
+        h3 Total tasks #{tasks.length} Completed: #{tasks.filter(task=>task[1]==1).length}
+        
+        ul(id="todo-tasks")
+          each task, index in tasks
+            li(id=task[1]==1?'line':'normal')
+              input(type='checkbox' checked=task[1]==1?true:false hx-post=`/todo/update-task/${index}` hx-target='#todo-tasks-container' hx-swap='outerHTML')
+              p(hx-post=`/todo/update-task/${index}` hx-target='#todo-tasks-container' hx-swap='outerHTML') #{task[0]}
+              span(class="delete-button" hx-post=`/todo/delete-task/${index}` hx-target='#todo-tasks-container' hx-swap='outerHTML') delete
+
+      div(class='new-task-container')
+        form(hx-post='/todo/add-task' hx-includes="[name='task']" hx-target='#todo-tasks-container' hx-swap='outerHTML') 
+          input(type='text' placeholder='Type a new task' name='task')
+          input(type='submit' value="add")
+          
+        
