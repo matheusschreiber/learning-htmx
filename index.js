@@ -3,9 +3,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const app = express();
-
-var _counter = 0;
-var _animal_directory= "";
+app.use(express.urlencoded({ extended: true }));
 
 /**
  * HOME ROUTE
@@ -18,7 +16,9 @@ app.get("/", (req,res)=> {
 
 /**
  * COUTER ROUTES
- */
+*/
+
+var _counter = 0;
 
 app.get("/counter", (req,res)=> {
   res.render('counter/index.pug', {counter: _counter})
@@ -43,6 +43,8 @@ app.post("/sub", (req,res)=>{
  * ANIMALS ROUTES
  */
 
+var _animal_directory= "";
+
 app.get("/animals", (req,res)=> {
   res.render('animals/index.pug', {directory: _animal_directory})
 })
@@ -58,10 +60,44 @@ app.post("/animal/:animal", (req,res)=>{
 
 
 /**
- * SERVING STATIC IMAGES
+ * TODO ROUTES
+ */
+
+var _todo_tasks = [
+  ["Levar o lixo para fora", 0],
+  ["Regar as plantas", 0],
+  ["Arrumar a casa", 1],
+  ["Fazer as compras do mẽs", 1],
+  ["Pagar conta de luz", 0],
+]
+
+app.get("/todo", (req,res)=> {
+  res.render('todo/index.pug', {tasks: _todo_tasks})
+})
+
+app.post("/todo/update-task/:index", (req,res)=> {
+  _todo_tasks[req.params.index][1] = _todo_tasks[req.params.index][1]==1 ? 0 : 1;
+  res.render('todo/todos.pug', {tasks: _todo_tasks})
+})
+
+app.post("/todo/delete-task/:index", (req,res)=> {
+  _todo_tasks.splice(req.params.index, 1)
+  res.render('todo/todos.pug', {tasks: _todo_tasks})
+})
+
+app.post("/todo/add-task", (req,res)=> {
+  const { task } = req.body
+  _todo_tasks.push([task, 0])
+  res.render('todo/todos.pug', {tasks: _todo_tasks})
+})
+
+
+/**
+ * SERVING STATIC FILES
  */
 
 app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/globals.css', express.static(process.cwd() + '/globals.css'));
 
 
 /**
