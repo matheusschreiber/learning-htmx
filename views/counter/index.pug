@@ -30,6 +30,11 @@ html
         color:var(--color4);
       }
 
+      .title a {
+        text-decoration: none;
+        color: var(--color4);
+      }
+
       #htmx-logo {
         color: white;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
@@ -41,21 +46,31 @@ html
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
       }
 
-      .options {
-        list-style: none;
-        text-align: center;
-        padding: 0;
+      #counter-number {
+        font-size: 25pt;
+        color: var(--color4);
       }
 
-      .options li {
-        color: var(--color4);
-        font-size: 20pt;
-        margin-bottom: 20px;
+      #container {
+        display: flex;
+        align-items: center;
+        height: 100px;
+        gap: 10px;
       }
 
-      .options li a {
-        text-decoration: none;
-        color: var(--color4);
+      .button-counter {
+        border: none;
+        background-color: var(--color2);
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: .2s ease;
+      }
+
+      .button-counter:hover {
+        background-color: var(--color4);
+        transform: scale(1.05);
       }
 
 
@@ -69,11 +84,15 @@ html
           | &gt; htm
           span(id='htmx-logo-span') x
 
-      ul(class="options")
-        li
-          a(href="/counter") Counter
-        li TODO List
-        li Text editor
-        li 
-          a(href="/animals") Animals
-      
+      h2(class="title") 
+        a(href="/") 🔙 
+        | Counter
+      table
+        tbody
+          tr(id="container")
+            td(hx-post='/sub' hx-target="#counter-number") 
+              button(class="button-counter") ➖
+            td
+              h2(id="counter-number") #{counter}
+            td(hx-post='/add' hx-target="#counter-number") 
+              button(class="button-counter") ➕

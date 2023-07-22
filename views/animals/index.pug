@@ -1,0 +1,125 @@
+html
+  head
+    script(src='https://unpkg.com/htmx.org@1.9.2')
+    style(type='text/css').
+      :root {
+        --color1: #331D2C;
+        --color2: #3F2E3E;
+        --color3: #A78295;
+        --color4: #EFE1D1;
+      }
+
+      body {
+        background-color:var(--color1);
+      }
+
+      * {
+        font-family: 'Courier New', monospace;
+      }
+
+      .main-container {
+        width: 50%;
+        margin: 10px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title, h1{
+        color:var(--color4);
+        text-align: center;
+      }
+
+      .title a {
+        text-decoration: none;
+        color: var(--color4);
+      }
+
+      #htmx-logo {
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+        font-size: 40pt;
+      }
+
+      #htmx-logo-span {
+        color: #3d72d7;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+      }
+
+      #counter-number {
+        font-size: 25pt;
+        color: var(--color4);
+      }
+
+      #container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .button-animal {
+        border: none;
+        background-color: var(--color2);
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 20pt;
+        transition: .2s ease;
+      }
+
+      .button-animal:hover {
+        background-color: var(--color4);
+        transform: scale(1.05);
+      }
+
+      .image-container {
+        height: 300px;
+        width: 300px;
+        margin-top: 50px;
+      }
+
+      .image-container img {
+        height: 100%;
+        width: 100%;
+      }
+
+
+  body
+    div(class='main-container')
+      div 
+        //- img(src="./public/htmx_logo.png")
+        h1(id='htmx-logo') 
+          | &lt;
+          span(id='htmx-logo-span') /
+          | &gt; htm
+          span(id='htmx-logo-span') x
+
+      h2(class="title") 
+        a(href="/") 🔙 
+        | Animals
+      table
+        tbody
+          tr(id="container")
+            td(hx-post='/animal/dog' hx-target="#image-placeholder") 
+              button(class="button-animal") 🐶
+            td(hx-post='/animal/cat' hx-target="#image-placeholder") 
+              button(class="button-animal") 🐱
+            td(hx-post='/animal/horse' hx-target="#image-placeholder") 
+              button(class="button-animal") 🐴
+            td(hx-post='/animal/snake' hx-target="#image-placeholder") 
+              button(class="button-animal") 🐍
+            td(hx-post='/animal/mouse' hx-target="#image-placeholder") 
+              button(class="button-animal") 🐁
+            td(hx-post='/animal/fox' hx-target="#image-placeholder") 
+              button(class="button-animal") 🦊
+            td(hx-post='/animal/tiger' hx-target="#image-placeholder") 
+              button(class="button-animal") 🐯
+      
+      div(class='image-container') 
+        div(id='image-placeholder') 
+          if directory == ""
+            h1 Pick one emoji to see the animal
+          else
+            img(src=directory)
