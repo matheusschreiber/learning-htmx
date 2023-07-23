@@ -5,8 +5,8 @@ dotenv.config()
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 
-app.set('views', process.cwd() + '/views');
-app.set('view engine', 'pug');
+// app.set('views', process.cwd() + '/views');
+// app.set('view engine', 'pug');
 
 /**
  * HOME ROUTE
